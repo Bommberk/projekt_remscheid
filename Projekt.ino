@@ -1,5 +1,5 @@
-// #include <ESP8266WiFi.h>
-// #include <PubSubClient.h>
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
 #include "assets/classes/UsefullMethods.h"
 #include "assets/classes/Sensors.h"
 #include "assets/classes/Msqtt.h"
@@ -19,9 +19,9 @@ int infraredSensorValue;
 // Ultraschall Sensor
 int ultrasonicSensorPin = 1;
 int ultrasonicSensorValue;
-// Ultraschall Sensor
-int ultrasonicSensorPin = 1;
-int ultrasonicSensorValue;
+// Bewegungs Sensor
+int motionSensorPin = 2;
+int motionSensorValue;
 
 
 /**** Sekunden ****/
@@ -38,7 +38,9 @@ void setup()
     pinMode(ledPin, OUTPUT);
     pinMode(infraredSensorPin, INPUT);
     pinMode(ultrasonicSensorPin, INPUT);
+    pinMode(motionSensorPin, INPUT);
     Serial.begin(115200);
+    mq.setup();
 }
 
 void loop()
@@ -48,11 +50,11 @@ void loop()
     Serial.println(infraredSensorValue);
 
     // MotionSensor
-    motionSensorValue = s.getMotionSensor(sensorPin);
+    motionSensorValue = s.getMotionSensor(motionSensorPin);
 
 
     // Ausführung
-    if(um.delayWithoutDelay(previousMillis,5000)){um.send("guten tag",client);}
+    if(um.delayWithoutDelay(previousMillis,5000)){mq.send("guten tag");}
     // action();
 }
     

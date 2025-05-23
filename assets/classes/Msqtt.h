@@ -1,23 +1,23 @@
+WiFiClient espClient;
+PubSubClient client(espClient);
+
 class Msqtt
 {
     const char* ssid = "Ikea Net";
     const char* password = "hallo123hallo";
     const char* mqtt_server = "172.20.10.3"; // IP deines Docker-Hosts
 
-    WiFiClient espClient;
-    PubSubClient client(espClient);
-
     public: void setup()
     {
-        this->setup_wifi(ssid,password);
-        this->client.setServer(mqtt_server, 1883);
+        this->setup_wifi();
+        client.setServer(this->mqtt_server, 1883);
     }
     // WiFi Setup
-    public: void setup_wifi(const char* ssid, const char* password) 
+    public: void setup_wifi() 
     {
-        WiFi.begin(ssid, password);
+        WiFi.begin(this->ssid, this->password);
         Serial.print("Connect to WiFi: ");
-        Serial.println(ssid);
+        Serial.println(this->ssid);
 
         while(WiFi.status() != WL_CONNECTED){
             Serial.print(".");
@@ -27,7 +27,7 @@ class Msqtt
         Serial.println("Connected");
     }
     // Reconnect
-    public: void reconnect(PubSubClient client) {
+    public: void reconnect() {
         while(!client.connected()){
             if(client.connect("ESPClient")){
                 client.subscribe("test/topic");
@@ -38,7 +38,7 @@ class Msqtt
         }
     }
     // Send
-    public: void send(const char* message, PubSubClient client)
+    public: void send(const char* message)
     {
         if(!client.connected()){this->reconnect(client);}
         
