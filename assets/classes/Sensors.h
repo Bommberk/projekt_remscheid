@@ -5,8 +5,7 @@ class Sensors
     public: bool getInfreredSensor(const int sensorPin)
     {
         const int ledPin =  13;
-        int sensorState = false;   
-        // read the state of the sensor value:
+        bool sensorState = false;   
         sensorState = digitalRead(sensorPin);
         return !sensorState;
     }
@@ -20,14 +19,10 @@ class Sensors
 
     /***** ESP2 *****/
     // PIR Motion Sensor
-    public: bool motionSensor(byte sensorPin)
+    public: bool getMotionSensor(const int sensorPin)
     {
-        byte indicator = 13;
-        byte state = digitalRead(sensorPin);
-        digitalWrite(indicator,state);
-        if(state == 1)Serial.println("Somebody is in this area!");
-        else if(state == 0)Serial.println("No one!");
-        delay(500);
+        bool sensorState = digitalRead(sensorPin);
+        return sensorState;
     }
 
     // Analog Temperature Sensor

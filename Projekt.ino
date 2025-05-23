@@ -1,7 +1,8 @@
-#include <ESP8266WiFi.h>
-#include <PubSubClient.h>
+// #include <ESP8266WiFi.h>
+// #include <PubSubClient.h>
 #include "assets/classes/UsefullMethods.h"
 #include "assets/classes/Sensors.h"
+#include "assets/classes/Msqtt.h"
 
 /******** LEDs ********/
 // LED 
@@ -18,14 +19,10 @@ int infraredSensorValue;
 // Ultraschall Sensor
 int ultrasonicSensorPin = 1;
 int ultrasonicSensorValue;
+// Ultraschall Sensor
+int ultrasonicSensorPin = 1;
+int ultrasonicSensorValue;
 
-/**** WiFi ****/
-const char* ssid = "Ikea Net";
-const char* password = "hallo123hallo";
-const char* mqtt_server = "172.20.10.3"; // IP deines Docker-Hosts
-
-WiFiClient espClient;
-PubSubClient client(espClient);
 
 /**** Sekunden ****/
 unsigned long previousMillis = 0;
@@ -34,6 +31,7 @@ const long standardInterval = 1000;
 /**** Objekte ****/
 UsefullMethods um;
 Sensors s;
+Msqtt mq;
 
 void setup()
 {
@@ -41,8 +39,6 @@ void setup()
     pinMode(infraredSensorPin, INPUT);
     pinMode(ultrasonicSensorPin, INPUT);
     Serial.begin(115200);
-    um.setup_wifi(ssid,password);
-    client.setServer(mqtt_server, 1883);
 }
 
 void loop()
@@ -50,6 +46,9 @@ void loop()
     // InverredSensor
     infraredSensorValue = s.getInfreredSensor(infraredSensorPin);
     Serial.println(infraredSensorValue);
+
+    // MotionSensor
+    motionSensorValue = s.getMotionSensor(sensorPin);
 
 
     // Ausführung
