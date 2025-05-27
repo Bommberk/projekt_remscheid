@@ -1,29 +1,22 @@
 #include "includes.h"
 
 /******** LEDs ********/
-// LED 
-int ledPin = 13;
-bool ledState = false;
-// LED2
 
-// LED3
 
 /****** Sensoren ******/
 // Infrarot Sensor
 int infraredSensorPin = D0;
-int infraredSensorValue;
+bool infraredSensorValue;
 // Ultraschall Sensor
 int ultrasonicSensorPin = 1;
-int ultrasonicSensorValue;
+bool ultrasonicSensorValue;
 
 
 /**** Functions ****/
 void setup()
 {
-    pinMode(ledPin, OUTPUT);
     pinMode(infraredSensorPin, INPUT);
     pinMode(ultrasonicSensorPin, INPUT);
-    pinMode(motionSensorPin, INPUT);
     Serial.begin(115200);
     mq.setup();
 }
@@ -37,15 +30,20 @@ void loop()
     Serial.println("---------------------");
 
     // UltrasonicSensor
-    
+    ultrasonicSensorValue = s.getUltrasonicSensor(ultrasonicSensorPin);
+    Serial.print("Ultraschall Sensor Wert: ");
+    Serial.println(ultrasonicSensorValue);
+    Serial.println("---------------------");
 
 
     // Ausführung
-    if(um.delayWithoutDelay(previousMillis,5000)){mq.send("guten tag");}
-    // action();
+    action();
 }
     
 void action()
 {
-    digitalWrite(ledPin,ledState);
+    if(um.delayWithoutDelay(previousMillis, 2000)){
+        mq.send("guten Tag ESP1");
+        Serial.println("Action ausgeführt");
+    }
 }
