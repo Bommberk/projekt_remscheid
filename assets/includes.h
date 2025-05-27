@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "assets/classes/UsefullMethods.h"
-#include "assets/classes/Sensors.h"
-#include "assets/classes/Msqtt.h"
+#include "classes/UsefullMethods.h"
+#include "classes/Sensors.h"
+#include "classes/Msqtt.h"
 
 
 /**** Sekunden ****/
