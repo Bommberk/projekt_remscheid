@@ -13,7 +13,7 @@ class Msqtt
         client.setServer(this->mqtt_server, 1883);
     }
     // WiFi Setup
-    public: void setup_wifi() 
+    void setup_wifi()
     {
         WiFi.begin(this->ssid, this->password);
         Serial.print("Connect to WiFi: ");
@@ -27,7 +27,7 @@ class Msqtt
         Serial.println("Connected");
     }
     // Reconnect
-    public: void reconnect() {
+    void reconnect() {
         while(!client.connected()){
             if(client.connect("ESPClient")){
                 client.subscribe("test/topic");
@@ -40,9 +40,9 @@ class Msqtt
     // Send
     public: void send(const char* message)
     {
-        if(!client.connected()){this->reconnect(client);}
+        if(!client.connected()){this->reconnect();}
         
         client.loop();
         client.publish("test/topic", message);
     }
-}
+};
