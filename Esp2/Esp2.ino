@@ -1,4 +1,4 @@
-#include "../assets/includes.h"
+#include "C:/Users/JimMohncke/Documents/Remscheid Berufsschule/Projekt/assets/includes.h"
 
 /******** LEDs ********/
 
@@ -9,13 +9,14 @@ int motionSensorPin = D0;
 bool motionSensorValue;
 // Analog Temperature Sensor
 int temperatureSensorPin = A0;
-float temperatureSensorValue;
+double temperatureSensorValue;
 
 
 /**** Functions ****/
 void setup()
 {
-    
+    pinMode(motionSensorPin, INPUT);
+    pinMode(temperatureSensorPin, INPUT);
     Serial.begin(115200);
     mq.setup();
 }

@@ -1,4 +1,4 @@
-#include "../assets/includes.h"
+#include "C:/Users/JimMohncke/Documents/Remscheid Berufsschule/Projekt/assets/includes.h"
 
 /******** LEDs ********/
 
@@ -8,8 +8,9 @@
 int infraredSensorPin = D0;
 bool infraredSensorValue;
 // Ultraschall Sensor
-int ultrasonicSensorPin = 1;
-bool ultrasonicSensorValue;
+int ultrasonicSensorPin = D1;
+int ultrasonicTrigPin = D2;
+double ultrasonicSensorValue;
 
 
 /**** Functions ****/
@@ -17,6 +18,7 @@ void setup()
 {
     pinMode(infraredSensorPin, INPUT);
     pinMode(ultrasonicSensorPin, INPUT);
+    pinMode(ultrasonicTrigPin, OUTPUT);
     Serial.begin(115200);
     mq.setup();
 }
@@ -30,7 +32,9 @@ void loop()
     Serial.println("---------------------");
 
     // UltrasonicSensor
-    ultrasonicSensorValue = s.getUltrasonicSensor(ultrasonicSensorPin);
+    if(um.delayWithoutDelay(previousMillis,50)){
+        ultrasonicSensorValue = s.getUltrasonicSensor(ultrasonicSensorPin,ultrasonicTrigPin);
+    }
     Serial.print("Ultraschall Sensor Wert: ");
     Serial.println(ultrasonicSensorValue);
     Serial.println("---------------------");
